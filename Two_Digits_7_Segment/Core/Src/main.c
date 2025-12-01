@@ -43,6 +43,22 @@
 
 /* USER CODE BEGIN PV */
 
+int count = 0;
+int LSB;
+int MSB;
+
+int LEDs[] = {	0x3F,	//0
+				0x06,	//1
+				0x5B,	//2
+				0x4F,	//3
+				0x66,	//4
+				0x6D,	//5
+				0x7D,	//6
+				0x07,	//7
+				0x7F,	//8
+				0x6F	//9
+};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,6 +113,24 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	  MSB = count / 10;
+	  LSB = count % 10;
+
+	  GPIOC->ODR = LEDs[MSB];
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, SET); //enable pin 14 7-segment
+	  HAL_Delay(50);
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, RESET);	//disable pin 14 7-segment
+
+	  GPIOC->ODR = LEDs[LSB];
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, SET); //enable pin 13 7-segment
+	  HAL_Delay(50);
+	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, RESET);	//disable pin 13 7-segment
+
+	  HAL_Delay(100);
+
+	  if (++count == 100)
+		  count = 0;
   }
   /* USER CODE END 3 */
 }
