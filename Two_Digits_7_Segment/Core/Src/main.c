@@ -43,9 +43,9 @@
 
 /* USER CODE BEGIN PV */
 
-int count = 0;
-int LSB;
-int MSB;
+int count = 19;
+int LSD;
+int MSD;
 
 int LEDs[] = {	0x3F,	//0
 				0x06,	//1
@@ -114,23 +114,20 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	  MSB = count / 10;
-	  LSB = count % 10;
+	  MSD = count / 10;
+	  LSD = count % 10;
 
-	  GPIOC->ODR = LEDs[MSB];
+	  GPIOC->ODR = LEDs[MSD];
 	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, SET); //enable pin 14 7-segment
-	  HAL_Delay(50);
+	  HAL_Delay(10);
 	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, RESET);	//disable pin 14 7-segment
 
-	  GPIOC->ODR = LEDs[LSB];
+	  GPIOC->ODR = LEDs[LSD];
 	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, SET); //enable pin 13 7-segment
-	  HAL_Delay(50);
+	  HAL_Delay(10);
 	  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, RESET);	//disable pin 13 7-segment
 
-	  HAL_Delay(100);
 
-	  if (++count == 100)
-		  count = 0;
   }
   /* USER CODE END 3 */
 }
